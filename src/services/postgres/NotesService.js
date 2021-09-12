@@ -18,12 +18,18 @@ class NotesService {
       text: 'INSERT INTO notes VALUES($1, $2, $3, $4, $5, $6) RETURNING id',
       values: [id, title, body, tags, createdAt, updatedAt],
     };
+
     const result = await this._pool.query(query);
     if (!result.rows[0].id) {
       throw new InvariantError('Catatan gagal ditambahkan');
     }
- 
+
     return result.rows[0].id;
+  }
+
+  async getNotes() {
+    const result = await this._pool.query('SELECT * FROM notes');
+    return result.rows.map(mapDBToModel);
   }
 
   async getNoteById(id) {
