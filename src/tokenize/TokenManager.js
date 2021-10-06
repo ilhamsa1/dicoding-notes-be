@@ -8,7 +8,7 @@ const TokenManager = {
     try {
       const artifacts = Jwt.token.decode(refreshToken);
       Jwt.token.verifySignature(artifacts, process.env.REFRESH_TOKEN_KEY);
-
+      console.log('halo')
       const { payload } = artifacts.decoded;
       return payload;
     } catch (error) {
